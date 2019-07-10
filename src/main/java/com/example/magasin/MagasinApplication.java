@@ -12,8 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class MagasinApplication {
@@ -23,15 +22,36 @@ public class MagasinApplication {
         ApplicationContext ctx = SpringApplication.run(MagasinApplication.class, args);
         ArticleRepo articleRepo = ctx.getBean(ArticleRepo.class);
 
-
         //Insérer les données
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String dateInString = "31/08/2018"; Date date = df.parse(dateInString);
-        articleRepo.save(new Article("Ordinateur","4245g25g","HP NoteBook",date,"20183108-Ordinateur-4245g25g"));
-        dateInString = "21/05/2017"; date = df.parse(dateInString);
-        articleRepo.save(new Article("Ordinateur","42re45g","DELL Inspiron",date,"20170521-Ordinateur-42re45g"));
 
-
+        //Instancier 99 articles de type ordinateur
+        String type = "Ordinateur";
+        String reference ;
+        String designation ;
+        Date dateAchat ;
+        String photo ;
+        Random rand = new Random();
+        int n, jour, mois, an;
+        for (int i = 0; i < 99 ; i++){
+            n = rand.nextInt(9)+1; // [1 - 9] Obtenir un nombre entre [0 - 8] puis ajouter 1
+            jour = rand.nextInt(30)+1; // [1 - 30]
+            mois = rand.nextInt(12)+1; // [1 - 12]
+            an = rand.nextInt(5)+2015; // [2015 - 2019]
+            reference = String.valueOf(n) + String.valueOf(jour) + String.valueOf(n) + String.valueOf(n) + String.valueOf(mois) + String.valueOf(n) ;
+            if(i%2 == 0){
+                designation = "HP NoteBook";
+                photo = "HP_NoteBook.png";
+            }
+            else{
+                designation = "DELL Inspiron";
+                photo = "DELL_Inspiron.png";
+            }
+            String dateAchatString = String.valueOf(jour) + "/" + String.valueOf(mois) + "/" + String.valueOf(an);
+            dateAchat = df.parse(dateAchatString);
+            articleRepo.save(new Article(type,reference,designation,dateAchat,photo));
+        }
 
         //Récupérer les données
         Set<Article> setArticles = articleRepo.findByDesignation("DELL Inspiron");
@@ -42,7 +62,6 @@ public class MagasinApplication {
         Page<Article> pageArticles3 = articleRepo.findArticles(minDate,maxDate,PageRequest.of(0,5) );
         Article article1 = articleRepo.findArticleByDateAchat(date);
 
-
         //Afficher les données
         System.out.println("Articles de designation: DELL Inspiron");
         setArticles.forEach(article -> System.out.println(article.toString()));
@@ -50,8 +69,7 @@ public class MagasinApplication {
         pageArticles1.forEach(article -> System.out.println(article.toString()));
         System.out.println("Article dont la référence contient: 42");
         pageArticles2.forEach(article -> System.out.println(article.toString()));
-        System.out.println("Article acheté le: 21/05/2017");
-        article1.toString();
+        System.out.println("TODO: Article acheté le: 21/05/2017 ");
         System.out.println("Articles achetés entre: 19/05/2017 et 25/05/2017");
         pageArticles3.forEach(article -> System.out.println(article.toString()));
 

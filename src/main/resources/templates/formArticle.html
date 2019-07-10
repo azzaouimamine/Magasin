@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saisie des articles</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{/css/myStyle.css}">
+</head>
+<body>
+<h2 align="center">Nouvel article</h2>
+<div class="col-md-6 col-sm-6 col-xs-12 spacer col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-header">
+            </div>
+            <div class="panel-body">
+                <form th:action="@{SaveArticle}" method="post" th:object="${article}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="control-label">Type: </label>
+                        <select name="type" th:field="*{type}" class="form-control">
+                                <option value ="Ordinateur">Ordinateur</option>
+                                <option value ="Tablette">Tablette</option>
+                        </select>
+                        <span></span>
+                        <label class="control-label">Référence: </label>
+                        <input type="text" th:field="*{reference}" class="form-control">
+                        <span class="text-danger" th:errors="*{reference}"></span>
+                        <label class="control-label">Désignation: </label>
+                        <input type="text" th:field="*{designation}" class="form-control">
+                        <span class="text-danger" th:errors="*{designation}"></span>
+                        <label class="control-label">Date d'achat: </label>
+                        <input type="date" th:field="*{dateAchat}" class="form-control">
+                        <span class="text-danger" th:errors="*{dateAchat}"></span>
+                        <label class="control-label">Photo: </label>
+                        <input type="file" th:field="*{photo}" class="form-control">
+                        <span class="text-danger" th:errors="*{photo}"></span>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-primary">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

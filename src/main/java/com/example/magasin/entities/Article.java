@@ -1,6 +1,10 @@
 package com.example.magasin.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -12,11 +16,14 @@ public class Article {
     private Long idArticle;
     @Column(name = "TypeArticle" , length = 100)
     private String type;
-    @Column(name = "ReferenceArticle" , length = 100)
+    @Column(name = "ReferenceArticle" , length = 50)
+    @NotEmpty
+    @Size(min = 5, max = 50)
     private String reference;
     @Column(name = "designationArticle" , length = 100)
     private String designation;
     @Column(name = "dateAchatArticle" , length = 100)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateAchat;
     @Column(name = "photoArticle" , length = 100)
     private String photo;
