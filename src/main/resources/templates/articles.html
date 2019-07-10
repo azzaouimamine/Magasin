@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des articles</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/myStyle.css}">
+</head>
+<body>
+    <h2 align="center">Articles</h2>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Reference</th>
+                    <th>Designation</th>
+                    <th>Date d'achat</th>
+                    <th>Photo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="a:${pageArticles.content}">
+                    <th th:text="${a.idArticle}"></th>
+                    <th th:text="${a.type}"></th>
+                    <th th:text="${a.reference}"></th>
+                    <th th:text="${a.designation}"></th>
+                    <th th:text="${a.dateAchat}"></th>
+                    <th th:text="${a.photo}"></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
